@@ -1,0 +1,33 @@
+replicaCount: 2 #количество реплик для deployment
+image: #описание пода для deployment
+  repository: nginx # образ
+  tag: "latest" # тег образа
+  pullPolicy: IfNotPresent # политика загрузки
+
+service: # параметры для сервиса
+  type: ClusterIP # тип сервиса
+  port: 80 # порт сервиса
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 200Mi
+  limits:
+    cpu: 200m
+    memory: 400Mi
+
+livenessProbe:
+  httpGet:
+    path: /healthz
+    port: 8080
+  initialDelaySeconds: 30
+  periodSeconds: 3
+  timeoutSeconds: 5
+
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: 8080
+  initialDelaySeconds: 15
+  periodSeconds: 3
+  timeoutSeconds: 5
