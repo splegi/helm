@@ -1,7 +1,7 @@
-replicaCount: 6 #количество реплик для deployment
+replicaCount: 4 #количество реплик для deployment
 image: #описание пода для deployment
   repository: nginx # образ
-  tag: "latest" # тег образа
+  tag: "1.13" # тег образа
   pullPolicy: IfNotPresent # политика загрузки
 
 service: # параметры для сервиса
