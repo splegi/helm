@@ -1,4 +1,4 @@
-replicaCount: 2 #количество реплик для deployment
+replicaCount: 6 #количество реплик для deployment
 image: #описание пода для deployment
   repository: nginx # образ
   tag: "latest" # тег образа
