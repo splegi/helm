@@ -1,0 +1,19 @@
+apiVersion: v2
+name: transaction-processor
+description: test helm-chart for a banking application
+version: 0.1.0
+appVersion: 2.4.7
+type: application
+keywords:
+  - kafka
+  - personal account
+  - russian
+home: https://home-bank.org
+sources: #при работе я бы вставил реальные ссылки
+  - "первая ссылка"
+  - "вторая ссылка"
+maintainers:
+  - name: Andrey Yarilov
+    email: andrey@gmail.com
+  - name: olga petrova
+    email: olga@gmail.com
