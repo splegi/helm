@@ -1,45 +1,44 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: {{ .Chart.Name }}-{{ .Release.Name }}
-    labels:
-        app: {{- include "my-labels" . | indent 8 }}
+  name: {{ .Chart.Name }}-{{ .Release.Name }}
+  labels:
+    app: {{ include "my-labels" . }}
 spec:
-    replicas: {{ .Values.replicaCount }}
-    selector:
-        matchLabels:
-            app: {{- include "my-labels" . | indent 10 }}
-    template:
-        metadata:
-            labels:
-                app: {{- include "my-labels" . | indent 12 }}
-        spec:
-            containers:
-                - name: {{ .Chart.Name }}
-                  image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-                  imagePullPolicy: {{ .Values.image.pullPolicy }}
-                  ports:
-                    - containersPort: {{ .Values.service.port }}
-                  resources:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "my-labels" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "my-labels" . }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          resources:
 {{ .Values.resources | toYaml | indent 12 }}
-                  livenessProbe:
+          livenessProbe:
 {{ .Values.livenessProbe | toYaml | indent 12 }}
-                  readinessProbe:
+          readinessProbe:
 {{ .Values.readinessProbe | toYaml | indent 12 }}
 
 ---
 
 apiVersion: v1
 kind: Service
-metadata: 
-    name: {{ .Chart.Name }}
-    labels:
-        app: {{ .Chart.Name }}
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    app: {{ .Chart.Name }}
 spec:
-    type: {{ .Values.service.type }}
-    selector:
-        app: {{ .Chart.Name }}
-    ports:
-        - port: {{ .Values.service.port }}
-          targetPort: {{ .Values.service.targetPort | default 8080 }}
-        
+  type: {{ .Values.service.type }}
+  selector:
+    app: {{ .Chart.Name }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort | default 8080 }}
